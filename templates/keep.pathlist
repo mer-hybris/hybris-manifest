@@ -1,0 +1,11 @@
+# This is a list of 'path' entries which are needed for builds for this device.
+
+# Each manfest *should* have dedicated device repos
+
+# This catchall approach using regular expressions should work for
+# CyanogenMod manifests but is quite bulky. Please try to minimise it
+# for your device
+
+re: ^device/.*
+re: ^hardware/.*
+re: ^vendor/.*

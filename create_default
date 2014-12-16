@@ -1,0 +1,143 @@
+#!/usr/bin/perl -w
+use strict;
+
+my $SRCXML = $ARGV[0] ;
+my $HYBRIS_REVISION=$ARGV[1] ;
+my $DEFAULTXML = "default.xml"; # Output file
+my $HA_MANIFEST = "ha.xml";
+my $TMPL_DIR = "hybris-manifest/templates";
+my $DEFAULT_TMPL="hybris-manifest/default.xml.template";
+my $KEEP="keep.pathlist";
+
+sub usage() {
+  print << 'USE';
+Usage: hybris-manifest/create_default <base manifest> <hybris-revision>
+USE
+}
+
+# Validate usage
+if ( ! -d "hybris-manifest" ) {
+  usage;
+  print <<"INFO";
+This script should be run from the ha manifest directory
+ie: hybris-manifest should be a git submodule of the hybris-manifest git repo.
+See the README.md file in hybris-manifest for more details
+Stopping now
+INFO
+  exit 1;
+}
+
+if ( ! $SRCXML ) { # Must be provided
+  usage;
+  exit 1;
+}
+
+if ( ! -e $SRCXML ) { # Must exist
+  usage;
+  print "The base manifest '$SRCXML' cannot be read.\n";
+  exit 1;
+}
+
+if ( ! $HYBRIS_REVISION ) { # Must be provided
+  usage;
+  print <<"INFO";
+You must provide a revision to use for the modified hybris git repos.
+Typically this is the same as used in the base CM/AOSP manifest with 'cm' or 'aosp' replaced by 'hybris'
+eg : hybris-10.1.3 would correspond to cm-10.1.3
+INFO
+  exit 1;
+}
+
+if ( ! -e $KEEP ) { # Create if needed.
+  print "Creating an initial (bloated!) keep.pathlist - modify this to reduce the size of the manifest for your device\n";
+  system "cp", "$TMPL_DIR/$KEEP", $KEEP;
+}
+
+if ( ! -e $HA_MANIFEST ) { # Create if needed
+  print "Creating an ha.xml manifest - modify this to point to the correct droid-hal-\$DEVICE repo for your device\n";
+  system "cp", "$TMPL_DIR/$HA_MANIFEST", $HA_MANIFEST;
+} else {
+  print "ha.xml manifest exists - ensure this points to the correct droid-hal-\$DEVICE repo for your device\n";
+}
+
+my %keep;
+my %tmpl_paths;
+my @re;
+
+print "Getting list of repos to keep\n";
+foreach my $dir (".", "hybris-manifest") {
+  open my $KEEP_F, "<", "$dir/keep.pathlist" or die $!;
+  while (<$KEEP_F>) {
+    next if /^\s*#/; # skip comments
+    chomp;
+    s/#.*$//; # Allow comments after a keep line
+    s/\s+$//; # Remove trailing space
+    if (s/^re: //) {
+      push @re, $_;  # it's a regexp match
+    } else {
+      $keep{$_} = 1;
+    }
+  }
+}
+
+print "Getting list of hybris repos\n";
+if (open my $TMPL_F, "<", $DEFAULT_TMPL) {
+  while (<$TMPL_F>) {
+    next if /^\s*#/; # skip comments
+    chomp;
+    next unless /path="([^"]+)"/;
+    $tmpl_paths{$1} = 1;
+    # print "Not keeping $1 found in the template\n";
+  }
+} else { die $!; }
+
+open my $TMPL_F, "<", $DEFAULT_TMPL or die $!;
+open my $DEFAULTXML_F, ">", $DEFAULTXML or die $!;
+open my $SRCXML_F, "<", $SRCXML or die $!;
+
+while (<$TMPL_F>) {
+  s/name="MANIFEST"/name="$SRCXML"/;
+  last if /REMOVELIST/;
+  print $DEFAULTXML_F $_;
+}
+
+print "Inserting list of repos to skip\n";
+while (<$SRCXML_F>) {
+  next unless /<project/;
+
+  next unless /path="([^"]+)"/;
+  my $path = $1;
+  my $keep=0;
+
+  if (! defined $tmpl_paths{$path}) { # don't keep paths in the template
+    if (defined $keep{$path}) {
+      s/^/<!-- /; s/$/ --> <!-- in keep.pathlist -->/; # show the repo to be kept
+      $keep=1;
+    } else {
+      foreach my $re (@re) {
+	if ($path =~ /$re/) {
+	  s/^/<!-- /; s/$/ --> <!-- matches re: $re -->/; # show the repo to be kept
+	  $keep=1;
+	}
+      }
+    }
+  }
+  if (! $keep) { # create remove-project entries for unwanted repos
+    if (! /\/>$/ ) {
+      s(>$)(/>);
+    }
+    s/<project/<remove-project/;
+    if (defined $tmpl_paths{$path}) {
+      s/$/<!-- redefined later in this file -->/;
+    }
+  }
+  print $DEFAULTXML_F $_;
+}
+
+print "Setting revision of common repos to $HYBRIS_REVISION\n";
+while (<$TMPL_F>) {
+  s/revision="HYBRIS_REVISION"/revision="$HYBRIS_REVISION"/;
+  print $DEFAULTXML_F $_;
+}
+
+print "\nCreated default.xml\n";

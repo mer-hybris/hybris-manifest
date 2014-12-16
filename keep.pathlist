@@ -1,0 +1,52 @@
+# This is a list of 'path' entries which are needed for hybris builds.
+bootable/recovery
+device/common
+device/generic/common
+external/bison
+external/bzip2
+external/clang
+external/compiler-rt
+external/expat
+external/freetype
+external/gcc-demangle
+external/genext2fs
+external/giflib
+external/harfbuzz
+external/jpeg
+external/kernel-headers
+external/libnfc-nxp
+external/libpng
+external/libselinux
+external/llvm
+external/openssl
+external/qemu
+external/safe-iop
+external/skia
+external/stlport
+external/webp
+external/yaffs2
+external/zlib # for core/libzipfile
+frameworks/native
+frameworks/opt/emoji
+hardware/libhardware
+hardware/libhardware_legacy
+prebuilts/gcc/linux-x86/arm/arm-eabi-4.6
+prebuilts/gcc/linux-x86/arm/arm-eabi-4.7
+prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.6
+prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.7
+prebuilts/gcc/linux-x86/host/i686-linux-glibc2.7-4.4.3
+prebuilts/gcc/linux-x86/host/i686-linux-glibc2.7-4.6
+prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.7-4.6
+prebuilts/gcc/linux-x86/x86/i686-linux-android-4.6
+prebuilts/gcc/linux-x86/x86/i686-linux-android-4.7
+prebuilts/gcc/linux-x86/x86/x86_64-linux-android-4.7
+prebuilts/misc
+prebuilts/ndk
+prebuilts/sdk
+prebuilts/tools
+system/extras
+
+# Each manifest should have dedicated device repos listed in the
+# device specific keep.pathlist
+
+

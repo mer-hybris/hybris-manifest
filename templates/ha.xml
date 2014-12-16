@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the ha.xml Hardware Adaptation Manifest.
+It supplements and is <include>ed at the end of the common hybris manifest.
+
+It must be a complete repo manifest.
+
+Run "repo help manifest" for use of <remove-project> before adding
+<project> elements which already exist in the base manifest.
+
+-->
+
+<manifest>
+
+<!-- You may add a remote if needed 
+  <remote  name="ha" fetch="https://example.com" />
+-->
+
+<!-- You *MUST* provide the rpm/ path for your device specific dhd
+     You should specify a specific sha1/tag/branch in the revision
+-->
+  <project path="rpm" name="mer-hybris/droid-hal-FILLMEIN" remote="hybris" revision="master"/>
+
+<!-- include any device specific <project> and <remove-project> elements here
+-->
+ 
+</manifest>

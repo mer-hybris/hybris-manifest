@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <!-- the create_default script will include the original manifest name here -->
+  <include name="MANIFEST"/>
+
+  <!-- Now to add our own remotes, remove the unwanted projects and add the extras -->
+  <remote  name="hybris" fetch="https://github.com" />
+
+<!-- REMOVELIST -->
+
+<!-- Hybris extras -->
+  <project path="hybris/hybris-boot" name="lbt/hybris-boot" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="hybris/mer-kernel-check" name="lbt/mer-kernel-check" remote="hybris" revision="master"/>
+  <project path="hybris/overrides/kernel" name="lbt/nuc-kernel-overrides" remote="hybris" revision="master"/>
+
+<!-- Hybris overrides -->
+  <project path="build" name="lbt/android_build" remote="hybris" revision="HYBRIS_REVISION" >
+    <copyfile src="core/root.mk" dest="Makefile" />
+  </project>
+  <project path="bionic" name="lbt/android_bionic" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="libcore" name="lbt/android_libcore" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="system/core" name="lbt/android_system_core" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="hardware/ril" name="lbt/android_hardware_ril" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="external/busybox" name="lbt/android_external_busybox" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="external/protobuf" name="lbt/android_external_protobuf" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="external/liblzf" name="lbt/android_external_liblzf" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="frameworks/base" name="lbt/android_frameworks_base" remote="hybris" revision="HYBRIS_REVISION"/>
+
+  <include name="ha.xml"/>
+ 
+</manifest>
