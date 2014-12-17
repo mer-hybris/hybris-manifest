@@ -57,3 +57,30 @@ See ```repo help manifest``` for details but additional repos can be placed in t
 * commit the default.xml to your repo
 
 To modify the manifest, update the pathlists or submodule as needed and re run the create_default command
+
+	
+	DEVICE=i9305
+	mkdir hybris-manifest-$DEVICE
+	cd hybris-manifest-$DEVICE
+    git init .
+	git commit --allow-empty -sm"Initial commit"
+	git submodule add  https://github.com/mer-hybris/hybris-manifest.git hybris-manifest
+	git commit -sam"Added hybris-manifest submodule"
+
+	# Create cm-10.1.3.xml - this is the CM default manifest
+
+	# Now create a default.xml using templates and the correct branch
+    # of the various common repos
+	hybris-manifest/create_default cm-10.1.3.xml hybris-10.1.3
+
+	# Edit ha.xml to minimise it - it pulls in all kinds of stuff for
+    # many devices by default
+
+	git add *xml keep.pathlist
+	git commit -sam"Created manifest for $DEVICE"
+
+# To Build
+
+Follow the HADK but use your new manifest:
+
+	repo init -u https://github.com/mer-hybris/hybris-manifest-$DEVICE.git
