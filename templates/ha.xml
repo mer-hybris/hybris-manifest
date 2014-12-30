@@ -22,6 +22,7 @@ Run "repo help manifest" for use of <remove-project> before adding
   <project path="rpm" name="mer-hybris/droid-hal-FILLMEIN" remote="hybris" revision="master"/>
 
 <!-- include any device specific <project> and <remove-project> elements here
+<project path="hybris/overrides/kernel" name="mer-hybris/FILLMEIN-kernel-overrides" remote="hybris" revision="master"/>
 -->
  
 </manifest>
