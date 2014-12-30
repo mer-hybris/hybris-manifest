@@ -13,7 +13,7 @@
   <project path="hybris/hybris-boot" name="mer-hybris/hybris-boot" remote="hybris" revision="HYBRIS_REVISION"/>
   <project path="hybris/mer-kernel-check" name="mer-hybris/mer-kernel-check" remote="hybris" revision="master"/>
 
-<!-- Hybris overrides -->
+<!-- Hybris overrides (remove-project tags will be created automatically) -->
   <project path="build" name="mer-hybris/android_build" remote="hybris" revision="HYBRIS_REVISION" >
     <copyfile src="core/root.mk" dest="Makefile" />
   </project>
@@ -25,6 +25,7 @@
   <project path="external/protobuf" name="mer-hybris/android_external_protobuf" remote="hybris" revision="HYBRIS_REVISION"/>
   <project path="external/liblzf" name="mer-hybris/android_external_liblzf" remote="hybris" revision="HYBRIS_REVISION"/>
   <project path="frameworks/base" name="mer-hybris/android_frameworks_base" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="vendor/cm" name="mer-hybris/android_vendor_cm" remote="hybris" revision="HYBRIS_REVISION"/>
 
   <include name="ha.xml"/>
  
