@@ -10,22 +10,21 @@
 <!-- REMOVELIST -->
 
 <!-- Hybris extras -->
-  <project path="hybris/hybris-boot" name="lbt/hybris-boot" remote="hybris" revision="HYBRIS_REVISION"/>
-  <project path="hybris/mer-kernel-check" name="lbt/mer-kernel-check" remote="hybris" revision="master"/>
-  <project path="hybris/overrides/kernel" name="lbt/nuc-kernel-overrides" remote="hybris" revision="master"/>
+  <project path="hybris/hybris-boot" name="mer-hybris/hybris-boot" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="hybris/mer-kernel-check" name="mer-hybris/mer-kernel-check" remote="hybris" revision="master"/>
 
 <!-- Hybris overrides -->
-  <project path="build" name="lbt/android_build" remote="hybris" revision="HYBRIS_REVISION" >
+  <project path="build" name="mer-hybris/android_build" remote="hybris" revision="HYBRIS_REVISION" >
     <copyfile src="core/root.mk" dest="Makefile" />
   </project>
-  <project path="bionic" name="lbt/android_bionic" remote="hybris" revision="HYBRIS_REVISION"/>
-  <project path="libcore" name="lbt/android_libcore" remote="hybris" revision="HYBRIS_REVISION"/>
-  <project path="system/core" name="lbt/android_system_core" remote="hybris" revision="HYBRIS_REVISION"/>
-  <project path="hardware/ril" name="lbt/android_hardware_ril" remote="hybris" revision="HYBRIS_REVISION"/>
-  <project path="external/busybox" name="lbt/android_external_busybox" remote="hybris" revision="HYBRIS_REVISION"/>
-  <project path="external/protobuf" name="lbt/android_external_protobuf" remote="hybris" revision="HYBRIS_REVISION"/>
-  <project path="external/liblzf" name="lbt/android_external_liblzf" remote="hybris" revision="HYBRIS_REVISION"/>
-  <project path="frameworks/base" name="lbt/android_frameworks_base" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="bionic" name="mer-hybris/android_bionic" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="libcore" name="mer-hybris/android_libcore" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="system/core" name="mer-hybris/android_system_core" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="hardware/ril" name="mer-hybris/android_hardware_ril" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="external/busybox" name="mer-hybris/android_external_busybox" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="external/protobuf" name="mer-hybris/android_external_protobuf" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="external/liblzf" name="mer-hybris/android_external_liblzf" remote="hybris" revision="HYBRIS_REVISION"/>
+  <project path="frameworks/base" name="mer-hybris/android_frameworks_base" remote="hybris" revision="HYBRIS_REVISION"/>
 
   <include name="ha.xml"/>
  
